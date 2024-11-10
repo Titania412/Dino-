@@ -1,0 +1,148 @@
+import java.util.*;
+public class Dino_Class_Tester {
+
+	public static void main(String[] args) {
+
+		Scanner sc = new Scanner(System.in);
+		Random rn = new Random();
+		
+		// declare variables 
+		int userAtt, userDef, compAtt, compDef;
+		
+		int random = 0, random1 =0, random2=0;
+		
+		// Instantiate the Dino_Class
+		Dino_Class user = new Dino_Class();
+		Dino_Class computer = new Dino_Class();
+		
+		// ask user to choose a dino
+		System.out.println("Choose a dino: ");
+		System.out.println("\n1.) T-Rex: \nHealth: 20 pts \nDamage: \n\tAggressive: 6-10\n\tDefensive: 4-8\nDefense:\n\tAggressive: 0-2\n\tDefensive: 4-8");
+		System.out.println("\n2.) Stego: \nHealth: 40 pts \nDamage: \n\tAggressive: 3-6\n\tDefensive: 1-4\nDefense:\n\tAggressive: 1-3\n\tDefensive: 4-8");
+		System.out.println("\n3.) Triceratops: \nHealth: 30 pts \nDamage: \n\tAggressive: 4-8\n\tDefensive: 2-6\nDefense:\n\tAggressive: 1-4\n\tDefensive: 2-6");
+		int userChoice = sc.nextInt(); // save user input
+		
+		// if statement for the three dino choose
+		// if statement for user T-rex 
+		if (userChoice == 1) {
+			System.out.println("User Dino: ");
+			user = new Dino_Class("T-Rex", 6,0,10,2,4,3,8,5,20); // info of the dino in order base on the parameterized constructor
+			System.out.println(user);
+			
+			// random for the computer to choose between the other two dino so the user and computer have different dino
+			random = rn.nextInt(2)+1;
+			} if(random == 1) {
+				System.out.println("\nComputer Dino: ");
+				computer = new Dino_Class("Stego", 3,1,6,3,1,4,4,8,40);
+				System.out.println(computer);
+				
+			} else if(random == 2) {
+				System.out.println("\nComputer Dino: ");
+				computer = new Dino_Class("Triceratops", 4,1,8,4,2,2,6,6,30);
+				System.out.println(computer);
+
+			// if statement for user stego
+		} else if (userChoice == 2) {
+			System.out.println("User Dino: ");
+			user = new Dino_Class ("Stego", 3,1,6,3,1,4,4,8,40);
+			System.out.println(user);
+
+			// random for the computer to choose between the other two dino so the user and computer have different dino
+			random1 = rn.nextInt(2)+1;
+			} if (random1 == 1) {
+				System.out.println("\nComputer Dino: ");
+				computer = new Dino_Class("T-Rex", 6,0,10,2,4,3,8,5,20);
+				System.out.println(computer);
+				
+			} else if(random1 == 2) {
+				System.out.println("\nComputer Dino: ");
+				computer = new Dino_Class("Triceratops", 4,1,8,4,2,2,6,6,30);
+				System.out.println(computer);
+			// if statement for user triceratops
+		} else if(userChoice == 3) {
+			System.out.println("User Dino: ");
+			user = new Dino_Class("Triceratops", 4,1,8,4,2,2,6,6,30);
+			System.out.println(user);
+			
+			// random for the computer to choose between the other two dino so the user and computer have different dino
+			random2 = rn.nextInt(2)+1;
+			} if (random2 == 1) {
+				System.out.println("\nComputer Dino: ");
+				computer = new Dino_Class("T-Rex", 6,0,10,2,4,3,8,5,20);
+				System.out.println(computer);
+
+			} else if (random2 == 2) {
+				System.out.println("\nComputer Dino: ");
+				computer = new Dino_Class("Stego", 3,1,6,3,1,4,4,8,40);
+				System.out.println(computer);
+			}
+			
+			//generate random number to pick who goes first 
+			System.out.println("\nIf it is 1, user goes first. If it is 2, computer goes first.");
+			int move = (int)(Math.random()*2) + 1;
+			if (move == 1) { //if 1, user goes first
+				System.out.println("1");
+				System.out.println("User goes first");
+			} else {
+				System.out.println("2"); // if 2, the computer foes first 
+				System.out.println("Computer goes first");
+			}
+		
+		System.out.println(); // just there for space 
+		System.out.println("User Dino: \n" + user.toString()); // print user dino's name and health
+		System.out.println("\nComputer Dino: \n" + computer.toString()); // print computer dino's name and health
+		
+		int choice;
+		
+		do { // do-while for attack or defense move 
+			if(move == 1) { // if the user goes first 
+				System.out.println("\nPick if you want your dino to be aggressive or defensive: ");
+				System.out.println("1.) Aggressive \n2.) Defense");
+				choice = sc.nextInt(); // save input
+				random = rn.nextInt(2)+1; // randomized computer attacks choice
+				
+				userAtt = user.Attack(choice); // user dino and choice goes through the attack method from the Dino_Class
+				userDef = user.Defense(choice); // user dino and choice goes through the defense method from Dino_Class
+				
+				compAtt = computer.Attack(random); // Computer dino and random choice goes through the attack method from the Dino_Class
+				compDef = computer.Defense(random); // Computer dino and random choice goes through the defense method from the Dino_Class
+				
+				user.adjusthealth(compAtt, userDef); // compAtt and userDef goes through the adjusthealth to see if damage will be done or not 
+				computer.adjusthealth(userAtt, compDef); // userAt and compDef goes through the adjusthealth to see if damage will be done or not 
+				
+				// print the result 
+				System.out.println("User Dino: \n" + user.toString());
+				System.out.println("\nComputer Dino: \n" + computer.toString());
+				
+			// if computer goes first 
+			} else if (move == 2)  {
+				random = rn.nextInt(2)+1; // random computer choice
+				System.out.println("\nPick if you want your dino to be aggressive or defensive: ");
+				System.out.println("1.) Aggressive \n2.) Defense");
+				choice = sc.nextInt(); 
+				
+				userAtt = user.Attack(choice); // user dino and choice goes through the attack method from the Dino_Class
+				userDef = user.Defense(choice); // user dino and choice goes through the defense method from Dino_Class
+				
+				compAtt = computer.Attack(random); // Computer dino and random choice goes through the attack method from the Dino_Class
+				compDef = computer.Defense(random); // Computer dino and random choice goes through the defense method from the Dino_Class
+				
+				user.adjusthealth(compAtt, userDef); // compAtt and userDef goes through the adjusthealth to see if damage will be done or not 				
+				computer.adjusthealth(userAtt, compDef); // userAt and compDef goes through the adjusthealth to see if damage will be done or not 
+				
+				// print result 
+				System.out.println("User Dino: \n" + user.toString());
+				System.out.println("\nComputer Dino: \n" + computer.toString());
+
+			}
+			// if user and computer health is above 0, it while repeat the do_while until either user or computer health is below 0
+		}while(user.getHealth() > 0 && computer.getHealth() > 0);
+			if(computer.getHealth() < 0) { // if computer dino health is less than 0, user win
+				System.out.println("YOU WON!!!");
+			} else if (user.getHealth() < 0) { // if user dino health is less than 0, computer win 
+				System.out.println("YOU LOST!!!");
+			}
+			
+	}
+
+}
