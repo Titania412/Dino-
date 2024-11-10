@@ -1,0 +1,67 @@
+import java.util.*;
+public class Dino_Class {
+
+	Random rn = new Random();
+	
+	// private instance data 
+	private String Name;
+	private int attMin1, attMin2, attMax1, attMax2, defMin1, defMin2, defMax1, defMax2, Health;
+	
+	// blank constructors 
+	public Dino_Class() {}
+
+	// parameterized for name, attack min and max, defense min and max, and health 
+	public Dino_Class(String N, int aMin1, int aMin2, int aMax1, int aMax2, int dMin1, int dMin2, int dMax1, int dMax2, int H) {
+		Name = N;
+		attMin1 = aMin1;
+		attMin2 = aMin2;
+		attMax1 = aMax1;
+		attMax2 = aMax2;
+		defMin1 = dMin1;
+		defMin2 = dMin2;
+		defMax1 = dMax1;
+		defMax2 = dMax2;
+		Health = H;
+	}
+	// method for attack
+	public int Attack(int att) {
+		Random rn = new Random();
+		// generate random number if aggressive
+		if (att == 1) {
+			int a = rn.nextInt(attMax1) + attMin1;
+			return a;
+		} else { // generate random if defensive  
+			int b = rn.nextInt(attMax2) + attMin2;
+			return b;
+		}
+	}
+	
+	public int Defense(int def) {
+		Random rn = new Random();
+
+		if (def == 1) { // generate random number if aggressive
+			int c = rn.nextInt(defMax1) + defMin1;
+			return c;
+		} else { // generate random if defensive  
+			int d = rn.nextInt(defMax2) + defMin2;
+			return d;
+		}
+	}
+	
+	public void adjusthealth(int att, int def) {
+		int diff = att-def; // to see if the dino attack is higher than the defense 
+		if (diff >= 0) { // if the diff is greater than 0, then the attack would be successful. if the defense is greater, then there would be no damage done
+			System.out.println("\nSuccessful Attack");
+			System.out.println("Health Decreased " + diff + ".\n" );
+			Health -= diff; // health would decrease 
+			} 
+		}
+	// getter for health
+	public int getHealth() {
+		return Health;
+	}
+	// toString method 
+	public String toString() {
+		return "Dino: " + Name + "\nHP: " + Health; // return the dino's name and health
+		}
+	}
